@@ -8,8 +8,6 @@ export class Controller {
   async start() {
     const dates = await EmergencyDatesController();
     const [weekdays, holidays] = await EmergencyShiftNumberController();
-    // console.log('weekdays', weekdays);
-    // console.log('holdays', holidays);
 
     // 달력 만들기
     const calendar = CreateCalendar(dates);
