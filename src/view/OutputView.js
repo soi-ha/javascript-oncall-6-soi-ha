@@ -1,8 +1,10 @@
 import { Console } from '@woowacourse/mission-utils';
 
 const OutputView = {
-  printEmergencySchedule() {
-    Console.print(`{}월 {}일 {요일} {이름}`);
+  printEmergencySchedule(month, addArrangementCalendar) {
+    addArrangementCalendar.forEach((value) => {
+      Console.print(`${month}월 ${value[0]}일 ${value[1]} ${value[2]}`);
+    });
   },
 };
 

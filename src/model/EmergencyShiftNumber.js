@@ -7,21 +7,20 @@ export class EmergencyShiftNumber {
   constructor(weekdays, holidays) {
     this.#weekdays = weekdays;
     this.#holidays = holidays;
-    const daysList = [weekdays, holidays];
-    this.#validate(daysList, weekdays, holidays);
+    this.#validate(weekdays, holidays);
   }
 
-  #validate(daysList, weekdays, holidays) {
-    this.#validateListLength(daysList);
-    this.#validateName(daysList);
-    this.#validateDuplicateName(daysList);
-    this.#validateSameListLength(daysList);
+  #validate(weekdays, holidays) {
+    this.#validateListLength(weekdays, holidays);
+    this.#validateName(weekdays, holidays);
+    this.#validateDuplicateName(weekdays, holidays);
+    this.#validateSameListLength(weekdays, holidays);
     this.#validateListSameValue(weekdays, holidays);
   }
 
   // 각 배열의 길이는 5~35
-  #validateListLength(daysList) {
-    daysList.forEach((li) => {
+  #validateListLength(weekdays, holidays) {
+    [weekdays, holidays].map((li) => {
       if (li.length < 5 || li.length > 35) {
         throw new Error(ERROR.message);
       }
@@ -29,9 +28,9 @@ export class EmergencyShiftNumber {
   }
 
   // 각 이름의 유효성 검사 (길이 1~5, 숫자-특수문자 불가)
-  #validateName(daysList) {
+  #validateName(weekdays, holidays) {
     const REGEX = /^[a-zA-Z가-힣]{1,5}$/;
-    daysList.forEach((li) => {
+    [weekdays, holidays].map((li) => {
       li.filter((name) => {
         if (!REGEX.test(name)) {
           throw new Error(ERROR.message);
@@ -41,8 +40,8 @@ export class EmergencyShiftNumber {
   }
 
   // 중복 이름 확인
-  #validateDuplicateName(daysList) {
-    daysList.forEach((li) => {
+  #validateDuplicateName(weekdays, holidays) {
+    [weekdays, holidays].map((li) => {
       if (new Set(li).size !== li.length) {
         throw new Error(ERROR.message);
       }
@@ -50,16 +49,16 @@ export class EmergencyShiftNumber {
   }
 
   // 두 배열의 길이는 동일
-  #validateSameListLength(daysList) {
-    if (daysList[0].length !== daysList[1].length) {
+  #validateSameListLength(weekdays, holidays) {
+    if (weekdays.length !== holidays.length) {
       throw new Error(ERROR.message);
     }
   }
 
   // 두 배열의 입력된 값은 모두 동일
   #validateListSameValue(weekdays, holidays) {
-    const week = weekdays.sort();
-    const holi = holidays.sort();
+    const week = [...weekdays].sort();
+    const holi = [...holidays].sort();
     for (let i = 0; i < week.length; i++) {
       if (week[i] !== holi[i]) {
         throw new Error(ERROR.message);
