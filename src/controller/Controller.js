@@ -1,7 +1,8 @@
-import InputView from '../view/InputView.js';
+import EmergencyDatesController from './EmergencyDatesController.js';
+
 export class Controller {
   async start() {
-    const test = await InputView.writeEmergencyDates();
-    console.log(test);
+    const dates = await EmergencyDatesController();
+    console.log(dates);
   }
 }
