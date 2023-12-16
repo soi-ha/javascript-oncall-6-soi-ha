@@ -1,4 +1,21 @@
 export default function WorkArrangement(calendar, weekdays, holidays) {
+  const argumentCalendar = addArrangement(calendar, weekdays, holidays);
+  return changeOrder(argumentCalendar);
+}
+
+function changeOrder(calendar) {
+  for (let i = 1; i < calendar.length - 1; i++) {
+    if (calendar[i - 1][2] === calendar[i][2]) {
+      [calendar[i][2], calendar[i + 1][2]] = [
+        calendar[i + 1][2],
+        calendar[i][2],
+      ];
+    }
+  }
+  return calendar;
+}
+
+function addArrangement(calendar, weekdays, holidays) {
   let weekTurn = 0;
   let holiTurn = 0;
   calendar.forEach((day) => {
@@ -10,16 +27,12 @@ export default function WorkArrangement(calendar, weekdays, holidays) {
       if (holiTurn === holidays.length - 1) {
         holiTurn = 0;
       }
-      // console.log('holiTurn', holiTurn);
-      // console.log('holidays', holidays[holiTurn]);
       day.push(holidays[holiTurn]);
       holiTurn += 1;
     } else {
       if (weekTurn === weekdays.length - 1) {
         weekTurn = 0;
       }
-      // console.log('weekTurn', weekTurn);
-      // console.log('weekdays', weekdays[weekTurn]);
       day.push(weekdays[weekTurn]);
       weekTurn += 1;
     }

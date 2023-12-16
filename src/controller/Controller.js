@@ -20,6 +20,5 @@ export class Controller {
     );
 
     OutputView.printEmergencySchedule(dates[0], addArrangementCalendar);
-    // console.log(addArrangementCalendar);
   }
 }
