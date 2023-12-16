@@ -24,18 +24,19 @@ function addArrangement(calendar, weekdays, holidays) {
       day[1].includes('일') ||
       day[1].includes('휴일')
     ) {
-      if (holiTurn === holidays.length - 1) {
-        holiTurn = 0;
-      }
-      day.push(holidays[holiTurn]);
-      holiTurn += 1;
+      [holidays, holiTurn] = conditionalStatement(day, holidays, holiTurn);
     } else {
-      if (weekTurn === weekdays.length - 1) {
-        weekTurn = 0;
-      }
-      day.push(weekdays[weekTurn]);
-      weekTurn += 1;
+      [weekdays, weekTurn] = conditionalStatement(day, weekdays, weekTurn);
     }
   });
   return calendar;
+}
+
+function conditionalStatement(li, days, turn) {
+  if (turn === days.length - 1) {
+    turn = 0;
+  }
+  li.push(days[turn]);
+  turn += 1;
+  return [days, turn];
 }
